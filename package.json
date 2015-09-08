@@ -1,0 +1,8 @@
+{
+	"nativescript": {
+		"id": "org.nativescript.test",
+		"tns-android": {
+			"version": "1.2.1"
+		}
+	}
+}
