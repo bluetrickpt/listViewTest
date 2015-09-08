@@ -6,16 +6,21 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 
 var observableModule = require("data/observable");
+var buttonModule = require("ui/button");
 
 var ItemModel = (function (_super) {
     __extends(ItemModel, _super);
-    function ItemModel(itemName, itemLot, itemQuantity, itemStock, listView) {
+    function ItemModel(itemName, itemLot, itemQuantity, itemStock, removeItemTap) {
     	_super.call(this);
         this._itemName = itemName;
     	this._itemLot = itemLot; 
         this._itemQuantity = parseInt(itemQuantity);   
         this._itemStock = parseInt(itemStock);
-        this._listView = listView;
+
+        this.addEventListener(buttonModule.Button.tapEvent, function (args) {
+            console.log("Event!!!!!!!!!!");
+            console.log("What? " + args.object);
+        });
     }
     Object.defineProperty(ItemModel.prototype, "itemName", {
         get: function () {
@@ -52,21 +57,10 @@ var ItemModel = (function (_super) {
             value = parseInt(value) || 0;
             if (this._itemQuantity !== value) {
                 if(value > this._itemStock){
-                    //toast.makeText(this.strings.notEnoughStock, "short").show();
+
+                    console.log("Not enough stock!");
                     value = this._itemStock;
                     this._itemQuantity = value;
-                    //console.log("here = " + this.parent.parent);
-                    //this.parent._updateLayout();
-                    
-                    console.log("Not enough stock!");
-                    /*dialogs.alert({
-                      title: this.strings.notEnoughStock,
-                      message: String(this.strings.maxStock + this._itemStock),//this.strings.resetedToMaxQuantity, //I weren't able to reput the value in the textField
-                      okButtonText: "ok"
-                    });*/
-
-                    listView.refresh();
-                    
                 } 
                 else if(value < 0) {
                    this._itemQuantity = 0;
@@ -76,7 +70,6 @@ var ItemModel = (function (_super) {
 
                 console.log("Final value = " + this._itemQuantity);
                 this.notifyPropertyChanged("itemQuantity", value); 
-                
             }
         },
         enumerable: true,
@@ -94,13 +87,12 @@ var ItemModel = (function (_super) {
         },
         enumerable: true,
         configurable: true
-    });34
+    });
     ItemModel.prototype.addToQuantity = function(amount){
         if(this._itemQuantity + amount >= 0 && this._itemQuantity + amount <= this._itemStock)
             this._itemQuantity += amount;
         else if(this._itemQuantity + amount > this._itemStock)
             console.log("Max stock = " + this._itemStock);
-            //toast.makeText(String(this.strings.maxStock + this._itemStock), "short").show();
     };
 
     return ItemModel;

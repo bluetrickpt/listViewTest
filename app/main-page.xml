@@ -14,7 +14,6 @@
                     <Button text="+" dock="right" tap="addQuantityTap"/>
                     <TextField  text="{{ itemQuantity }}" id="itemQuantityTF" dock="right" hint="#" /> 
                     <Button text="-" dock="right" tap="removeQuantityTap"/>
-                    
                 </DockLayout>
             </ListView.itemTemplate>
         </ListView>

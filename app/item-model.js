@@ -6,15 +6,21 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 
 var observableModule = require("data/observable");
+var buttonModule = require("ui/button");
 
 var ItemModel = (function (_super) {
     __extends(ItemModel, _super);
-    function ItemModel(itemName, itemLot, itemQuantity, itemStock) {
+    function ItemModel(itemName, itemLot, itemQuantity, itemStock, removeItemTap) {
     	_super.call(this);
         this._itemName = itemName;
     	this._itemLot = itemLot; 
         this._itemQuantity = parseInt(itemQuantity);   
         this._itemStock = parseInt(itemStock);
+
+        this.addEventListener(buttonModule.Button.tapEvent, function (args) {
+            console.log("Event!!!!!!!!!!");
+            console.log("What? " + args.object);
+        });
     }
     Object.defineProperty(ItemModel.prototype, "itemName", {
         get: function () {

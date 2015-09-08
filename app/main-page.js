@@ -46,13 +46,13 @@ exports.removeItemTap = function (args) {
   itemLot = dockLayout.getViewById("itemLotLabel").text;
   console.log("removing " + itemName + " with lot " + itemLot);
 
-  for(i=0; i<items.length; i++) {
-    currItemName = items.getItem(i).itemName;
-    currItemLot = items.getItem(i).itemLot;
+  for(i=0; i<tasks.length; i++) {
+    currItemName = tasks.getItem(i).itemName;
+    currItemLot = tasks.getItem(i).itemLot;
     console.log("current: " + currItemName + " with lot " + currItemLot);
     if(currItemName === itemName && currItemLot === itemLot){
       console.log("Found the deletion = " + i);
-      items.splice(i, 1);
+      tasks.splice(i, 1);
       break;
     }
   }

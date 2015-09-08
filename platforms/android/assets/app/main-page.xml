@@ -7,16 +7,16 @@
 
         <ListView row="1" id="listView">
             <ListView.itemTemplate>
-                    <DockLayout borderWidth="2" stretchLastChild="false">
-                        <Label dock="left" id="itemNameLabel" text="{{ itemName }}" editable="false"/>
-                        <Label dock="left" id="itemLotLabel" text="{{ itemLot, ', ' + itemLot }}" editable="false"/> 
-                        <Button text="X" dock="right" tap="removeItemTap"/>
-                        <Button text="+" dock="right" tap="addQuantityTap"/>
-                        <TextField  text="{{ itemQuantity }}" id="itemQuantityTF" dock="right" hint="#" /> 
-                        <Button text="-" dock="right" tap="removeQuantityTap"/>
-                        
-                    </DockLayout>
-                </ListView.itemTemplate>
+                <DockLayout borderWidth="2" stretchLastChild="false">
+                    <Label dock="left" id="itemNameLabel" text="{{ itemName }}" editable="false"/>
+                    <Label dock="left" id="itemLotLabel" text="{{ itemLot }}" editable="false"/> 
+                    <Button text="X" dock="right" tap="removeItemTap"/>
+                    <Button text="+" dock="right" tap="addQuantityTap"/>
+                    <TextField  text="{{ itemQuantity }}" id="itemQuantityTF" dock="right" hint="#" /> 
+                    <Button text="-" dock="right" tap="removeQuantityTap"/>
+                    
+                </DockLayout>
+            </ListView.itemTemplate>
         </ListView>
     </GridLayout>
 </Page>

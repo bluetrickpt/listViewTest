@@ -19,15 +19,13 @@ exports.onPageLoaded = function(args) {
 
 exports.add = function() {
 	name = pageData.get("task");
-    tasks.push( new itemModel.ItemModel(name, "", 0, 100, listView) ); //{ name: pageData.get("task")  } //new itemModel.ItemModel(name, "", 0, 100, listView )
+    tasks.push( new itemModel.ItemModel(name, ", Lot", 0, 100) ); //{ name: pageData.get("task")  } //new itemModel.ItemModel(name, "", 0, 100, listView )
     pageData.set("task", "");
     viewModule.getViewById( page, "task" ).dismissSoftInput();
 };
 
 exports.removeQuantityTap = function (args) { 
-  //The only way I could get to update the quantity text (while also updating item quantity)
-  //Programmatically created items have a different binding context
-  //Than the viewModel!!!
+
   dockLayout = args.object.parent;
   quantity = parseInt(dockLayout.getViewById("itemQuantityTF").text);
   if(quantity > 0)
@@ -48,13 +46,13 @@ exports.removeItemTap = function (args) {
   itemLot = dockLayout.getViewById("itemLotLabel").text;
   console.log("removing " + itemName + " with lot " + itemLot);
 
-  for(i=0; i<items.length; i++) {
-    currItemName = items.getItem(i).itemName;
-    currItemLot = items.getItem(i).itemLot;
+  for(i=0; i<tasks.length; i++) {
+    currItemName = tasks.getItem(i).itemName;
+    currItemLot = tasks.getItem(i).itemLot;
     console.log("current: " + currItemName + " with lot " + currItemLot);
     if(currItemName === itemName && currItemLot === itemLot){
       console.log("Found the deletion = " + i);
-      items.splice(i, 1);
+      tasks.splice(i, 1);
       break;
     }
   }
