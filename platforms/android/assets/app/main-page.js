@@ -15,6 +15,10 @@ exports.onPageLoaded = function(args) {
     listView = page.getViewById("listView");
     listView.items = tasks;
     page.bindingContext = pageData;
+
+    tasks.on("propertyChange", function (args) {
+    	console.log("Alto: " + args.eventName + " no object " + args.object);
+    });
 };
 
 exports.add = function() {
@@ -25,12 +29,14 @@ exports.add = function() {
 };
 
 exports.removeQuantityTap = function (args) { 
-
-  dockLayout = args.object.parent;
+  currItemModule = args.object.bindingContext; 
+  value = currItemModule.get("itemQuantity") - 1;
+  currItemModule.set("itemQuantity", value);
+  /*dockLayout = args.object.parent;
   quantity = parseInt(dockLayout.getViewById("itemQuantityTF").text);
   if(quantity > 0)
     quantity -= 1;
-  dockLayout.getViewById("itemQuantityTF").text = String(quantity);  
+  dockLayout.getViewById("itemQuantityTF").text = String(quantity);*/  
 };
 
 exports.addQuantityTap = function (args) {
@@ -41,19 +47,7 @@ exports.addQuantityTap = function (args) {
 };
 
 exports.removeItemTap = function (args) {
-  dockLayout = args.object.parent;
-  itemName = dockLayout.getViewById("itemNameLabel").text;
-  itemLot = dockLayout.getViewById("itemLotLabel").text;
-  console.log("removing " + itemName + " with lot " + itemLot);
-
-  for(i=0; i<tasks.length; i++) {
-    currItemName = tasks.getItem(i).itemName;
-    currItemLot = tasks.getItem(i).itemLot;
-    console.log("current: " + currItemName + " with lot " + currItemLot);
-    if(currItemName === itemName && currItemLot === itemLot){
-      console.log("Found the deletion = " + i);
-      tasks.splice(i, 1);
-      break;
-    }
-  }
+	item = args.object.bindingContext;
+	index = tasks.indexOf(item);
+	tasks.splice(index,1);
 };

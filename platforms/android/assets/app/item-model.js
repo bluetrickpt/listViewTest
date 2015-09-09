@@ -14,13 +14,10 @@ var ItemModel = (function (_super) {
     	_super.call(this);
         this._itemName = itemName;
     	this._itemLot = itemLot; 
-        this._itemQuantity = parseInt(itemQuantity);   
-        this._itemStock = parseInt(itemStock);
+        this._itemQuantity = parseInt(itemQuantity) || 0;   
+        this._itemStock = parseInt(itemStock) || 0;
 
-        this.addEventListener(buttonModule.Button.tapEvent, function (args) {
-            console.log("Event!!!!!!!!!!");
-            console.log("What? " + args.object);
-        });
+
     }
     Object.defineProperty(ItemModel.prototype, "itemName", {
         get: function () {
@@ -60,16 +57,17 @@ var ItemModel = (function (_super) {
 
                     console.log("Not enough stock!");
                     value = this._itemStock;
-                    this._itemQuantity = value;
+
                 } 
                 else if(value < 0) {
-                   this._itemQuantity = 0;
+                   value = 0;
                 }
-                else
-                    this._itemQuantity = value;
+                
+                this._itemQuantity = value;
 
                 console.log("Final value = " + this._itemQuantity);
-                this.notifyPropertyChanged("itemQuantity", value); 
+                if(this.notifyPropertyChanged)
+                    this.notifyPropertyChanged("itemQuantity", value); 
             }
         },
         enumerable: true,
@@ -89,6 +87,7 @@ var ItemModel = (function (_super) {
         configurable: true
     });
     ItemModel.prototype.addToQuantity = function(amount){
+        console.log("here")
         if(this._itemQuantity + amount >= 0 && this._itemQuantity + amount <= this._itemStock)
             this._itemQuantity += amount;
         else if(this._itemQuantity + amount > this._itemStock)
